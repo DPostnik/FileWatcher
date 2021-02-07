@@ -51,6 +51,7 @@ namespace project.Service
                 {
                     _sqlNoteRepository.Create(notes);
                 }
+                File.SetAttributes(filePath, FileAttributes.Normal);
                 File.Delete(filePath);
                 RecordEntry(fileEvent,filePath);
             });
