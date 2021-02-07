@@ -1,4 +1,6 @@
-﻿using project.DA;
+﻿using System;
+using project.DA;
+using project.Models;
 
 namespace project
 {
@@ -6,9 +8,8 @@ namespace project
     {
         public static void Main(string[] args)
         {
-            FileInfoContext userContext = new FileInfoContext();
-            
-            userContext.SaveChanges();
+            NotesContext notesContext = new NotesContext();
+            notesContext.SaveChanges();
         }
     }
 }
