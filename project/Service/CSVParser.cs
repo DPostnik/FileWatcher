@@ -35,10 +35,10 @@ namespace project.Service
         {
             public ReportMap()
             {
-                Map(m => m.Id).Ignore();
+                // Map(m => m.Id).Ignore();
                 Map(m => m.Date).Name("Date");
-                Map(m => m.ClientName).Name("Client");
-                Map(m => m.ItemName).Name("Item");
+                Map(m => m.ClientName).Name("ClientName");
+                Map(m => m.ItemName).Name("ItemName");
                 Map(m => m.Price).Name("Price");
             }
         }

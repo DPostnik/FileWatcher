@@ -1,7 +1,6 @@
 ﻿using project.Models.Props;
 using System;
 using System.IO;
-using System.Threading;
 
 namespace project.Service
 {
@@ -20,10 +19,10 @@ namespace project.Service
         public FileWatcher()
             {
                 Properties properties = new Properties();
-                WatchingPath = properties.GetPropertyValueByName("filepath");
+                WatchingPath = properties.GetPropertyValueByName("obs_filepath");
                 _watcher = new FileSystemWatcher( WatchingPath)
                 {
-                    NotifyFilter = NotifyFilters.FileName | NotifyFilters.Size,
+                    // NotifyFilter = NotifyFilters.FileName | NotifyFilters.Size,
                     Filter = "*.csv"
                 };
                 _watcher.Deleted += Watcher_Deleted;
@@ -35,10 +34,10 @@ namespace project.Service
             public void Start()
             {
                 _watcher.EnableRaisingEvents = true;
-                while (_enabled)
-                {
-                    Thread.Sleep(1000);
-                }
+                // while (_enabled)
+                // {
+                //     Thread.Sleep(1000);
+                // }
             }
 
             public void Stop()
@@ -69,22 +68,7 @@ namespace project.Service
             private void Watcher_Deleted(object sender, FileSystemEventArgs e)
             {
                 Deleted?.Invoke(sender,e);
-                string fileEvent = "удален";
-                string filePath = e.FullPath;
-                RecordEntry(fileEvent, filePath);
             }
 
-            private void RecordEntry(string fileEvent, string filePath)
-            {
-                lock (obj)
-                {
-                    using (StreamWriter writer = new StreamWriter("D:\\templog.txt", true))
-                    {
-                        writer.WriteLine(String.Format("{0} файл {1} был {2}",
-                            DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss"), filePath, fileEvent));
-                        writer.Flush();
-                    }
-                }
-            }
         }
 }

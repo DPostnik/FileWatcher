@@ -1,26 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using NLog;
 using project.Models;
+using System;
+using System.Collections.Generic;
 
 namespace project.DA
 {
-    class SQLNoteRepository: IRepository<Note>
+    public class SQLNoteRepository: IRepository<Note>
     {
         private bool _disposed;
         private NotesContext _db;
-        private readonly log4net.ILog _log;
+        private readonly Logger _log;
 
         public SQLNoteRepository()
         {
-            _log = log4net.LogManager.GetLogger(typeof(SQLNoteRepository));
+            LogManager.LoadConfiguration("nlog.config");
+            _log = LogManager.GetCurrentClassLogger();
+            _db = new NotesContext();
         }
 
         public void Create(IEnumerable<Note> notes)
         {
-            foreach (var note in notes)
+            try
             {
-                Create(note);
+                foreach (var note in notes)
+                {
+                    Create(note);
+                }
+            }
+            catch (Exception e)
+            {
+                _log.Error($"Error while adding items to db: {e}");
             }
         }
 

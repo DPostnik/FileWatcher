@@ -1,19 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using System.Threading;
-using log4net;
+﻿using NLog;
 using project.DA;
 using project.Models.Props;
+using System.IO;
+using System.Threading;
 
 namespace project.Service
 {
     public class FileHandler
     {
         object obj = new object();
-        private CSVParser _parser;
-        private readonly log4net.ILog _log;
+        private CSVParser _parser = new CSVParser();
+        private readonly Logger _log;
         private string _watchingPath;
         private SQLNoteRepository _sqlNoteRepository;
 
@@ -21,7 +18,8 @@ namespace project.Service
         {
             _watchingPath = fileWatcher.WatchingPath;
             Properties properties = new Properties();
-            _log = LogManager.GetLogger(properties.GetPropertyValueByName("log_path"), typeof(FileHandler));
+            LogManager.LoadConfiguration("nlog.config");
+            _log = LogManager.GetCurrentClassLogger();
             fileWatcher.Changed += OnChanged;
             fileWatcher.Created += OnCreated;
             fileWatcher.Deleted += OnDeleted;
@@ -48,7 +46,7 @@ namespace project.Service
             {
                 string fileEvent = "создан";
                 string filePath = e.FullPath;
-                var notes = _parser.Parse(_watchingPath);
+                var notes = _parser.Parse(filePath);
                 using (_sqlNoteRepository = new SQLNoteRepository())
                 {
                     _sqlNoteRepository.Create(notes);
@@ -70,7 +68,7 @@ namespace project.Service
         {
             lock (obj)
             {
-                _log.Info($"File {filePath} was {fileEvent}");
+                _log.Info($"Файл (путь = {filePath}) был {fileEvent}");
             }
         }
     }

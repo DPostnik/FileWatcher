@@ -1,6 +1,6 @@
-﻿using System;
-using project.DA;
-using project.Models;
+﻿using NLog;
+using project.Service;
+using System;
 
 namespace project
 {
@@ -8,8 +8,15 @@ namespace project
     {
         public static void Main(string[] args)
         {
-            NotesContext notesContext = new NotesContext();
-            notesContext.SaveChanges();
+            LogManager.LoadConfiguration("nlog.config");
+            var log = LogManager.GetCurrentClassLogger();
+            log.Debug("Starting up");
+            FileWatcher fileWatcher = new FileWatcher();
+            fileWatcher.Start();
+            FileHandler fileHandler = new FileHandler(fileWatcher);
+            Console.WriteLine("Press 'q' to quit the sample.");
+            while (Console.Read() != 'q') ;
+            log.Debug("Shutting down");
         }
     }
 }
