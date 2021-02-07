@@ -6,7 +6,7 @@ namespace project.Models.Props
     public class Properties
     {
         private Dictionary<string, string> _properDictionary;
-        private string _filepath = @"C:\Users\dpost\source\repos\project\project\Models\Props\properties.txt";
+        private string _filepath = @"C:\Users\dpost\source\repos\project\project\BL\Models\Props\properties.txt";
 
         public Properties(string filepath)
         {
