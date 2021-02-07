@@ -2,11 +2,13 @@
 using project.Models;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace project.DA
 {
     public class SQLNoteRepository: IRepository<Note>
     {
+        
         private NotesContext _db;
         private readonly Logger _log;
 
@@ -34,6 +36,7 @@ namespace project.DA
 
         public void Create(Note note)
         {
+            
             try
             {
                 _db.Notes.Add(note);
