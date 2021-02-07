@@ -8,7 +8,7 @@ namespace project.Service
 {
     public class FileHandler
     {
-        object obj = new object();
+        private object _obj = new object();
         private CSVParser _parser = new CSVParser();
         private readonly Logger _log;
         private string _watchingPath;
@@ -66,7 +66,7 @@ namespace project.Service
 
         private void RecordEntry(string fileEvent, string filePath)
         {
-            lock (obj)
+            lock (_obj)
             {
                 _log.Info($"Файл (путь = {filePath}) был {fileEvent}");
             }

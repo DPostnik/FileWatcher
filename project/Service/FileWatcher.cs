@@ -22,7 +22,6 @@ namespace project.Service
                 WatchingPath = properties.GetPropertyValueByName("obs_filepath");
                 _watcher = new FileSystemWatcher( WatchingPath)
                 {
-                    // NotifyFilter = NotifyFilters.FileName | NotifyFilters.Size,
                     Filter = "*.csv"
                 };
                 _watcher.Deleted += Watcher_Deleted;

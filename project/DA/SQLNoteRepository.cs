@@ -7,7 +7,6 @@ namespace project.DA
 {
     public class SQLNoteRepository: IRepository<Note>
     {
-        private bool _disposed;
         private NotesContext _db;
         private readonly Logger _log;
 

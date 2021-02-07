@@ -35,7 +35,6 @@ namespace project.Service
         {
             public ReportMap()
             {
-                // Map(m => m.Id).Ignore();
                 Map(m => m.Date).Name("Date");
                 Map(m => m.ClientName).Name("ClientName");
                 Map(m => m.ItemName).Name("ItemName");
